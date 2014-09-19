@@ -1,0 +1,59 @@
+
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html">
+  <title>Blink Temperature</title>
+  <meta name="author" content="Jake Rocheleau">
+  <link rel="shortcut icon" href="">
+  <link rel="icon" href="http://designm.ag/favicon.ico">
+  <link rel="stylesheet" type="text/css" media="all" href="temp.css">
+  <link rel="stylesheet" type="text/css" media="all" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" media="all" href="http://fonts.googleapis.com/css?family=Acme">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+</head>
+
+<body>
+
+
+  <div id="w">
+    <div id="content">
+      <div id="top">
+      <div id="defaultval">
+        Temperature in K: <span id="currentval">5000</span></div>
+      <div id=topcenter></div>
+      <div id="offbutton"><button id="off_button">On/Off</button></div>
+      </div>
+      <div id="defaultslide"></div>
+
+
+    </div><!-- @end #content -->
+  </div><!-- @end #w -->
+<script type="text/javascript">
+$(function(){
+  $('#defaultslide').slider({
+    max: 50000,
+    min: 0,
+    value: 5000,
+    slide: function(e,ui) {
+      $('#currentval').html(ui.value);
+      $.get('/set_temp/'+ui.value);
+    }
+  });
+
+  $('#off_button').button({
+      icons: {
+        primary: "ui-icon-power"
+      },
+      text: false
+    }).click(function(event) {
+    $.get('/off');
+  });
+
+});
+</script>
+</body>
+</html>
+
